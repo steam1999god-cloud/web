@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مسیر بندگی: چالش انتخاب‌ها</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#101a2d;color:#f4f7ff}
+header{text-align:center;padding:22px 14px;background:linear-gradient(120deg,#0c7254,#34216f);border-bottom:3px solid #e3c45b}
+h1{margin:0 0 8px;font-size:clamp(25px,4vw,37px)}header p{margin:0;line-height:1.9;color:#e2e9ff}
+main{max-width:1100px;margin:18px auto;padding:0 12px 24px}.panel{background:#1a2941;border:1px solid #334665;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 8px 25px #0002}
+button,input{font:inherit}input{width:100%;padding:11px;border:1px solid #526581;border-radius:10px;background:#101c30;color:white}
+label{display:block;font-weight:bold;margin-bottom:6px}.setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+button{border:0;border-radius:12px;padding:12px 14px;font-weight:bold;cursor:pointer;transition:.15s}button:hover{transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.primary{background:#20b77d;color:#06291d}.secondary{background:#d8ccff;color:#28145f}.danger{background:#ffb5a6;color:#541b16}.hidden{display:none!important}.hint{font-size:13px;color:#b9c8df;line-height:1.9}
+.topstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.team{padding:12px;border-radius:14px;background:#111f34;border:2px solid #40516d;text-align:center}.team.active{border-color:#30d49a;box-shadow:0 0 0 2px #30d49a20}.team .icon{font-size:29px}.team strong{display:block;margin:6px 0}.meters{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#d1def2}
+.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);gap:14px;align-items:start}.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;direction:rtl}
+.tile{position:relative;min-height:85px;border:1px solid #3a4c68;border-radius:12px;background:linear-gradient(145deg,#273955,#192940);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5px;gap:3px}
+.tile .art{font-size:26px}.tile small{font-size:10px;line-height:1.4;color:#dce6f8}.tile .n{position:absolute;top:4px;right:5px;font-size:10px;color:#aebfda}.tile.good{background:linear-gradient(145deg,#1b614c,#1b3c3b);border-color:#33886b}.tile.tricky{background:linear-gradient(145deg,#654128,#382a2b);border-color:#b87c4b}.tile.goal{background:linear-gradient(145deg,#9c7a24,#4d411e);border-color:#e4c457}.tile.current{outline:3px solid #ffe27a;outline-offset:1px}.tile .pawn{font-size:15px}
+.side h2{margin-top:0}.scene{border-radius:14px;overflow:hidden;background:#111f34;border:1px solid #40516d}.scene-art{font-size:76px;text-align:center;padding:15px;background:radial-gradient(circle,#34496c,#101d31)}.scene-text{padding:13px;line-height:1.8}.cards{display:grid;gap:9px;margin-top:12px}.action{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;text-align:right;background:#243753;color:#f3f6ff;border:1px solid #526887;padding:10px;line-height:1.65}.action .emoji{font-size:29px;text-align:center}.action b{display:block}.action small{color:#c3d1e8}.action.goodchoice{border-right:4px solid #2ed69a}.action.risky{border-right:4px solid #ffad64}.action.safe{border-right:4px solid #9d8cff}
+.log{margin-top:12px;padding:12px;border-radius:12px;background:#101e32;line-height:1.9;min-height:64px;color:#e0eaff}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.controls button{flex:1}
+footer{text-align:center;background:#0a1220;color:#e2e9f7;padding:20px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.board{grid-template-columns:repeat(5,minmax(0,1fr))}.tile{min-height:70px}.tile .art{font-size:22px}}
+@media(max-width:430px){.tile{min-height:63px}.tile small{font-size:9px}.tile .art{font-size:19px}.panel{padding:12px}}
+</style></head>
+<body>
+<header><h1>🌗 مسیر بندگی: چالش انتخاب‌ها</h1><p>هر انتخاب هزینه و نتیجه دارد؛ راه آسان همیشه بهترین نیست!<br>دو گروه، منابع محدود و اتفاق‌های غیرمنتظره — روی یک کامپیوتر بازی کنید.</p></header>
+<main>
+<section class="panel" id="setup"><h2>🎮 شروع ماجراجویی</h2><p class="hint">در هر نوبت یک کارت انتخاب کنید. بعضی انتخاب‌های خوب زمان یا انرژی می‌گیرند؛ بعضی راه‌های وسوسه‌انگیز سریع‌اند اما ممکن است اعتماد یا نور شما را کم کنند. برای پیروزی باید به مقصد برسید و دست‌کم ۳ نشان نور داشته باشید.</p>
+<div class="setup"><div><label for="g1">نام گروه اول</label><input id="g1" value="گروه نور" maxlength="24"></div><div><label for="g2">نام گروه دوم</label><input id="g2" value="گروه امید" maxlength="24"></div></div>
+<p><button class="primary" id="start">شروع بازی</button></p></section>
+<section class="panel hidden" id="game">
+<div class="topstats">
+<div class="team" id="team0"><div class="icon">🔵</div><b id="name0">گروه نور</b><strong id="pos0">ایستگاه ۱</strong><div class="meters"><span id="light0">✨ نور: ۲</span><span id="energy0">⚡ انرژی: ۵</span><span id="trust0">🤝 اعتماد: ۳</span></div></div>
+<div class="team" id="team1"><div class="icon">🟣</div><b id="name1">گروه امید</b><strong id="pos1">ایستگاه ۱</strong><div class="meters"><span id="light1">✨ نور: ۲</span><span id="energy1">⚡ انرژی: ۵</span><span id="trust1">🤝 اعتماد: ۳</span></div></div>
+</div>
+<section class="panel rules" aria-label="راهنمای منابع بازی" style="margin-top:14px;margin-bottom:0;background:#202e48;border-color:#6b7f9f">
+<h2 style="margin:0 0 8px">📘 راهنمای منابع بازی</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;line-height:1.9">
+<div style="padding:10px;border-radius:12px;background:#132b3b;border-right:4px solid #f4c542"><b>⚡ انرژی</b><br>مثل بنزین ماشین است! بعضی کارهای خوب انرژی مصرف می‌کنند. اگر انرژی کافی نداشته باشید، نمی‌توانید آن انتخاب را انجام بدهید.</div>
+<div style="padding:10px;border-radius:12px;background:#18372f;border-right:4px solid #f6df69"><b>✨ نور</b><br>نشان می‌دهد چقدر در مسیر بندگی خداوند پیشرفت کرده‌اید. برای ورود به مقصد بازی، حداقل ۳ نشان نور لازم است.</div>
+<div style="padding:10px;border-radius:12px;background:#302744;border-right:4px solid #b6a0ff"><b>🤝 اعتماد</b><br>نشان می‌دهد گروه چقدر قابل اعتماد رفتار کرده است. اگر اعتماد به صفر برسد، یک خانه عقب می‌روید.</div>
+</div>
+</section>
+<div class="layout" style="margin-top:14px">
+<div><h2>🗺️ نقشه سفر</h2><div class="board" id="board"></div><p class="hint">🔵 گروه اول · 🟣 گروه دوم<br>🌿 کار نیک · 🌀 وسوسه · 🏁 مقصد</p></div>
+<div class="side"><div class="scene"><div class="scene-art" id="sceneArt">🌉</div><div class="scene-text"><b id="sceneTitle">پل انتخاب</b><div id="sceneDesc">راهتان به یک دوراهی رسیده است.</div></div></div>
+<h2 style="margin:14px 0 5px">انتخاب این نوبت</h2><div class="cards" id="cards"></div>
+<div class="log" id="log" aria-live="polite">نوبت گروه اول است. با فکر انتخاب کنید!</div>
+<div class="controls"><button class="primary" id="next" disabled>نوبت گروه بعدی ←</button><button class="secondary" id="reset">شروع دوباره</button></div></div>
+</div>
+</section>
+<section class="panel hidden" id="end"><h2>🏆 پایان ماجراجویی</h2><p id="winner" style="font-size:22px;font-weight:bold"></p><p id="endDesc" style="line-height:1.9"></p><button class="primary" id="again">بازی دوباره</button></section>
+</main><footer>سازنده بازی: <strong>محمد رضا علیزاده</strong></footer>
+<script>
+const $=id=>document.getElementById(id),fa=n=>new Intl.NumberFormat('fa-IR').format(n);
+const locations=[
+['🚩','آغاز سفر','start'],['🌼','باغ مهربانی','good'],['🪙','سکه وسوسه','tricky'],['🌉','پل انتخاب','good'],['🕸️','تار فریب','tricky'],
+['📚','کتابخانه دانایی','good'],['🌪️','باد خشم','tricky'],['🫶','کمک به رهگذر','good'],['🎭','نقاب دروغ','tricky'],['💧','چشمه آرامش','good'],
+['🧭','دوراهی بزرگ','good'],['🏚️','خانه نیازمند','good'],['🌀','میان‌بر مشکوک','tricky'],['🌳','بیشه صبر','good'],['📣','شایعه‌زار','tricky'],
+['🛡️','نگهبان حق','good'],['⛰️','سربالایی تلاش','good'],['💎','آزمون طمع','tricky'],['🌅','طلوع امید','good'],['🏁','مقصد روشن','goal']];
+const eventData={
+good:[
+{title:'🌼 باغ مهربانی',art:'🌼',desc:'مسافری کمک می‌خواهد، اما کمک کردن از وقت شما می‌گیرد.',cards:[{e:'🤝',t:'کمک واقعی',d:'هزینه: ۱ انرژی',type:'good',msg:'با کمک به مسافر، یک نشان نور و اعتماد گرفتید.',eff:{p:1,l:1,tr:1,en:-1}},{e:'👀',t:'رد شدن بی‌تفاوت',d:'سریع و بی‌هزینه',type:'safe',msg:'وقتتان را نگه داشتید، اما فرصت مهربانی از دست رفت.',eff:{p:1}},{e:'💰',t:'گرفتن پاداش فوری',d:'پیشروی سریع، اعتماد کمتر',type:'risky',msg:'پاداش گرفتید اما اعتماد گروه کم شد.',eff:{p:2,tr:-1}}]},
+{title:'📚 کتابخانه دانایی',art:'📚',desc:'می‌توانید کمی مکث کنید و چیزی یاد بگیرید یا از روی عجله رد شوید.',cards:[{e:'📖',t:'یادگیری و تلاش',d:'هزینه: ۱ انرژی؛ نور بیشتر',type:'good',msg:'با تلاش یاد گرفتید؛ نور و انرژی‌تان بهتر مدیریت شد.',eff:{p:1,l:1,en:-1}},{e:'🏃',t:'عجله کردن',d:'دو ایستگاه جلو، بدون نشان',type:'risky',msg:'سریع جلو رفتید، اما چیزی نیاموختید.',eff:{p:2}},{e:'🧑‍🤝‍🧑',t:'یادگیری گروهی',d:'هزینه: اعتماد ۱؛ نور ۲',type:'safe',msg:'با همکاری، نور زیادی به دست آوردید.',eff:{p:1,l:2,tr:-1}}]},
+{title:'🫶 کمک به رهگذر',art:'🫶',desc:'یک نفر وسیله‌هایش را انداخته. هر انتخاب پیامدی دارد.',cards:[{e:'🫶',t:'کمک کردن',d:'۱ انرژی خرج کن؛ اعتماد و نور بگیر',type:'good',msg:'رهگذر خوشحال شد و اعتماد گروه بالا رفت.',eff:{p:1,l:1,tr:1,en:-1}},{e:'➡️',t:'عبور از کنار او',d:'بدون تغییر منابع',type:'safe',msg:'بدون تغییر منابع عبور کردید.',eff:{p:1}},{e:'😏',t:'گرفتن یکی از وسایل',d:'سریع‌تر جلو برو، اما اعتماد از دست بده',type:'risky',msg:'یک میان‌بر گرفتید، اما اعتماد گروه آسیب دید.',eff:{p:2,tr:-2}}]},
+{title:'🛡️ نگهبان حق',art:'🛡️',desc:'کسی را ناعادلانه سرزنش می‌کنند. دفاع کردن شجاعت می‌خواهد.',cards:[{e:'🛡️',t:'دفاع محترمانه از حق',d:'هزینه: ۱ انرژی؛ اعتماد +۲',type:'good',msg:'با احترام از حق دفاع کردید؛ اعتماد گروه افزایش یافت.',eff:{p:1,l:1,tr:2,en:-1}},{e:'🤐',t:'سکوت برای راحتی',d:'یک ایستگاه جلو، بدون تغییر',type:'safe',msg:'از درگیری دور ماندید، اما فرصت کمک را از دست دادید.',eff:{p:1}},{e:'📣',t:'فریاد و دعوا',d:'ممکن است جلو بروید اما اعتماد کم می‌شود',type:'risky',msg:'بحث بالا گرفت و اعتماد گروه کم شد.',eff:{p:2,tr:-2}}]},
+{title:'⛰️ سربالایی تلاش',art:'⛰️',desc:'راه سخت است؛ می‌توانید انرژی بگذارید یا میان‌بر پرخطر بروید.',cards:[{e:'🧗',t:'تلاش قدم‌به‌قدم',d:'۲ انرژی خرج کن؛ نور بگیر',type:'good',msg:'با تلاش از سربالایی گذشتید و نور گرفتید.',eff:{p:2,l:1,en:-2}},{e:'🪄',t:'میان‌بر شانسی',d:'تاس پنهانی: شاید ۳ خانه جلو، شاید عقب',type:'risky',msg:'میان‌بر نتیجه غیرقابل‌پیش‌بینی داشت.',random:true},{e:'🧘',t:'استراحت کوتاه',d:'انرژی +۲؛ بدون پیشروی',type:'safe',msg:'استراحت کردید و انرژی تازه گرفتید.',eff:{en:2}}]}
+],
+tricky:[
+{title:'🪙 سکه وسوسه',art:'🪙',desc:'سکه‌ای پیدا کرده‌اید و کسی اطراف نیست. چه می‌کنید؟',cards:[{e:'🔎',t:'پیدا کردن صاحبش',d:'۱ انرژی خرج کن؛ اعتماد و نور بگیر',type:'good',msg:'سکه را به صاحبش رساندید؛ اعتماد و نور گرفتید.',eff:{p:1,l:1,tr:2,en:-1}},{e:'💰',t:'برداشتن سکه',d:'۲ خانه جلو؛ اعتماد و نور کم می‌شود',type:'risky',msg:'سریع جلو رفتید، اما اعتماد و نور از دست رفت.',eff:{p:2,l:-1,tr:-2}},{e:'📦',t:'تحویل به مسئول',d:'یک خانه جلو و اعتماد بیشتر',type:'safe',msg:'سکه را تحویل دادید و اعتماد گرفتید.',eff:{p:1,tr:1}}]},
+{title:'🌪️ باد خشم',art:'🌪️',desc:'کسی حرف ناراحت‌کننده‌ای زده. واکنش شما مسیر را تغییر می‌دهد.',cards:[{e:'🌬️',t:'آرام شدن و گفت‌وگو',d:'۱ انرژی خرج کن؛ نور +۱',type:'good',msg:'با آرامش گفت‌وگو کردید و از دردسر دور شدید.',eff:{p:1,l:1,en:-1}},{e:'💥',t:'جواب تند دادن',d:'۲ خانه جلو، اعتماد -۲',type:'risky',msg:'واکنش تند شما را جلو برد اما اعتماد را کم کرد.',eff:{p:2,tr:-2}},{e:'🚶',t:'فاصله گرفتن',d:'انرژی +۱، بدون پیشروی',type:'safe',msg:'کمی فاصله گرفتید تا آرام شوید.',eff:{en:1}}]},
+{title:'🕸️ تار فریب',art:'🕸️',desc:'کسی وعده موفقیت فوری می‌دهد، اما می‌خواهد حقیقت را پنهان کنید.',cards:[{e:'🧭',t:'رد کردن فریب',d:'۱ انرژی خرج کن؛ نور و اعتماد بگیر',type:'good',msg:'فریب را شناختید؛ نور و اعتماد به دست آوردید.',eff:{p:1,l:1,tr:1,en:-1}},{e:'🎭',t:'قبول کردن وعده',d:'۳ خانه جلو؛ اما اعتماد و نور کم می‌شود',type:'risky',msg:'سریع پیش رفتید ولی بهایش را با اعتماد و نور دادید.',eff:{p:3,l:-1,tr:-2}},{e:'🗣️',t:'مشورت با گروه',d:'اعتماد +۱؛ یک خانه جلو',type:'safe',msg:'با مشورت، تصمیم بهتری گرفتید.',eff:{p:1,tr:1}}]},
+{title:'📣 شایعه‌زار',art:'📣',desc:'پیامی درباره کسی شنیده‌اید که از درستی آن مطمئن نیستید.',cards:[{e:'🔍',t:'بررسی حقیقت',d:'۱ انرژی خرج کن؛ نور بگیر',type:'good',msg:'قبل از قضاوت حقیقت را بررسی کردید.',eff:{p:1,l:1,en:-1}},{e:'📢',t:'پخش شایعه',d:'۲ خانه جلو، اعتماد -۲',type:'risky',msg:'شایعه سریع پخش شد، اما اعتماد گروه پایین آمد.',eff:{p:2,tr:-2}},{e:'🤫',t:'پخش نکردن پیام',d:'نور +۱، بدون پیشروی',type:'safe',msg:'با پخش نکردن شایعه، از آبروی دیگران مراقبت کردید.',eff:{l:1}}]},
+{title:'💎 آزمون طمع',art:'💎',desc:'می‌توانید جایزه کوچک و مطمئن بگیرید یا برای جایزه بزرگ خطر کنید.',cards:[{e:'🎁',t:'جایزه مطمئن',d:'یک خانه جلو؛ اعتماد +۱',type:'safe',msg:'جایزه مطمئن گرفتید و اعتماد حفظ شد.',eff:{p:1,tr:1}},{e:'💎',t:'ریسک برای جایزه بزرگ',d:'تاس پنهانی: جلو یا عقب',type:'risky',msg:'ریسک کردید؛ نتیجه شانسی بود.',random:true},{e:'🫱',t:'تقسیم جایزه',d:'نور +۲ و اعتماد +۱؛ یک خانه جلو',type:'good',msg:'جایزه را تقسیم کردید؛ نور و اعتماد گروه بیشتر شد.',eff:{p:1,l:2,tr:1}}]}
+]};
+let names=[],state=[],turn=0,locked=false,won=false,usedScenes={};
+function freshState(){return {pos:0,light:1,energy:4,trust:3}}
+function start(){names=[$('g1').value.trim()||'گروه اول',$('g2').value.trim()||'گروه دوم'];state=[freshState(),freshState()];turn=0;locked=false;won=false;usedScenes={};$('setup').classList.add('hidden');$('end').classList.add('hidden');$('game').classList.remove('hidden');names.forEach((n,i)=>$('name'+i).textContent=n);makeBoard();refresh();showTurn();$('next').disabled=true}
+function makeBoard(){let b=$('board');b.innerHTML='';locations.forEach((x,i)=>{let el=document.createElement('div');el.className='tile '+(x[2]==='good'?'good':x[2]==='tricky'?'tricky':x[2]==='goal'?'goal':'');el.id='tile'+i;el.innerHTML=`<span class="n">${fa(i+1)}</span><span class="art">${x[0]}</span><small>${x[1]}</small><div class="pawn" id="pawn${i}"></div>`;b.appendChild(el)});drawPawns()}
+function drawPawns(){locations.forEach((_,i)=>{$('pawn'+i).textContent=''});state.forEach((s,i)=>{let e=$('pawn'+s.pos);if(e)e.textContent+=(i===0?'🔵':'🟣')});locations.forEach((_,i)=>$('tile'+i).classList.toggle('current',state.some(s=>s.pos===i)))}
+function refresh(){state.forEach((s,i)=>{$('pos'+i).textContent=`📍 ایستگاه ${fa(s.pos+1)} از ۲۰`;$('light'+i).textContent=`✨ نور: ${fa(s.light)}`;$('energy'+i).textContent=`⚡ انرژی: ${fa(s.energy)}`;$('trust'+i).textContent=`🤝 اعتماد: ${fa(s.trust)}`;$('team'+i).classList.toggle('active',i===turn)});drawPawns()}
+function showTurn(){locked=false;$('next').disabled=true;$('cards').innerHTML='';$('sceneArt').textContent='🧭';$('sceneTitle').textContent=`نوبت ${names[turn]}`;$('sceneDesc').textContent='سه انتخاب با پیامدهای متفاوت پیش روی شماست. همه‌چیز رایگان و بی‌هزینه نیست؛ منابع گروه را مدیریت کنید.';$('log').textContent=`گروه «${names[turn]}» انتخاب کند. گروه دیگر تماشا می‌کند و نوبت بعد بازی می‌کند.`;let s=state[turn];let key=locations[Math.min(s.pos+1,18)][2]==='tricky'?'tricky':'good';let list=eventData[key]||eventData.good;let roundKey=turn+'-'+s.pos;let evt=list[Math.floor(Math.random()*list.length)];if(usedScenes[roundKey])evt=eventData[key][(list.indexOf(evt)+1)%list.length];usedScenes[roundKey]=true;$('sceneArt').textContent=evt.art;$('sceneTitle').textContent=evt.title;$('sceneDesc').textContent=evt.desc;evt.cards.forEach((c,i)=>{let b=document.createElement('button');b.className='action '+(c.type==='good'?'goodchoice':c.type==='risky'?'risky':'safe');b.innerHTML=`<span class="emoji">${c.e}</span><span><b>${c.t}</b><small>${c.d}</small></span>`;b.onclick=()=>choose(evt,c,b);$('cards').appendChild(b)})}
+function choose(evt,c,btn){if(locked||won)return;let s=state[turn];if(c.eff&&c.eff.en<0&&s.energy<Math.abs(c.eff.en)){$('log').textContent='⚠️ انرژی کافی ندارید! این انتخاب فعلاً ممکن نیست. انتخاب دیگری کنید.';return}
+locked=true;[...$('cards').children].forEach(b=>b.disabled=true);let result=c.msg;
+if(c.random){let roll=Math.floor(Math.random()*6)+1;$('sceneArt').textContent=['🎲','⚄','⚁','🎲','⚅','⚂'][roll-1];if(roll>=4){s.pos+=3;s.trust=Math.max(0,s.trust-1);result+=` تاس ${fa(roll)} شد: موفق شدید و ۳ خانه جلو رفتید، اما کمی اعتماد کم شد.`}else{s.pos=Math.max(0,s.pos-2);s.energy=Math.max(0,s.energy-1);result+=` تاس ${fa(roll)} شد: میان‌بر شکست خورد؛ ۲ خانه عقب رفتید و انرژی کم شد.`}}
+else{let e=c.eff||{};s.pos+=e.p||0;s.light+=e.l||0;s.trust+=e.tr||0;s.energy+=e.en||0}
+s.pos=Math.max(0,Math.min(19,s.pos));s.light=Math.max(0,Math.min(8,s.light));s.trust=Math.max(0,Math.min(8,s.trust));s.energy=Math.max(0,Math.min(8,s.energy));
+// Low trust creates a setback; very low light makes final destination harder.
+if(s.trust===0){s.pos=Math.max(0,s.pos-1);result+=' اعتماد به صفر رسید؛ گروه یک ایستگاه عقب افتاد.';s.trust=1}
+if(s.pos===19&&s.light<3){s.pos=18;result+=' برای ورود به مقصد دست‌کم ۳ نشان نور لازم است؛ یک ایستگاه پیش از مقصد می‌مانید.'}
+refresh();$('log').textContent=result;$('next').disabled=false;
+if(s.pos===19&&s.light>=3){won=true;$('next').disabled=true;$('end').classList.remove('hidden');$('winner').textContent=`🏆 «${names[turn]}» به مقصد رسید!`;$('endDesc').textContent=`نور: ${fa(s.light)} · اعتماد: ${fa(s.trust)} · انرژی: ${fa(s.energy)}. پیروزی فقط با جلو رفتن نیست؛ باید مراقب اعتماد و منابع گروه هم باشید.`}
+}
+function nextTurn(){if(!locked||won)return;turn=1-turn;refresh();showTurn()}
+$('start').onclick=start;$('next').onclick=nextTurn;$('reset').onclick=()=>{if(confirm('بازی از اول شروع شود؟'))start()};$('again').onclick=()=>{ $('g1').value=names[0];$('g2').value=names[1];start();window.scrollTo({top:0,behavior:'smooth'})};
+</script></body></html>
